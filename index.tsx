@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as Classes from "classnames";
+import * as ReactDOM from "react-dom";
 import Transition, { Transition as ITransition } from "react-motion-ui-pack";
 
 export interface IProps extends React.Props<any> {
@@ -52,14 +53,45 @@ export class Dialog extends React.Component<IProps, any>
         onSecondaryClick: React.PropTypes.func,
     };
 
-    state = {}
+    /**
+     * It's necessary to render the modal element in a layer that's a direct child of 
+     * the body, to prevent the modal from getting constrained by parent element's 
+     * dimensions or styles. This layer is the container.
+     */
+    private layer: HTMLDivElement;
 
     render() {
+        return <noscript />;
+    }
+
+    componentDidMount() {
+        // Appending to the body is easier than managing the z-index of
+        // everything on the page.  It's also better for accessibility and
+        // makes stacking a snap (since components will stack in mount order).
+        this.layer = document.createElement('div');
+        document.body.appendChild(this.layer);
+        this.renderLayer();
+    }
+
+    componentDidUpdate() {
+        this.renderLayer();
+    }
+
+    componentWillUnmount() {
+        this.unrenderLayer();
+        document.body.removeChild(this.layer);
+    }
+
+    private unrenderLayer() {
+        ReactDOM.unmountComponentAtNode(this.layer);
+    }
+
+    private renderLayer() {
         const props = this.props;
         const buttons: JSX.Element[] = [];
         let body: JSX.Element = <div key={`react-win-dialog-empty`} />;
 
-        if (typeof(props.secondaryText) === "string") {
+        if (typeof (props.secondaryText) === "string") {
             buttons.push(
                 <button
                     key={`secondary-button`}
@@ -71,7 +103,7 @@ export class Dialog extends React.Component<IProps, any>
             )
         }
 
-        if (typeof(props.primaryText) === "string") {
+        if (typeof (props.primaryText) === "string") {
             buttons.push(
                 <button
                     key={`primary-button`}
@@ -99,16 +131,18 @@ export class Dialog extends React.Component<IProps, any>
             );
         }
 
-        return (
+        const modal = (
             <Transition
                 component={`div`}
                 runOnMount={true}
-                appear={{ opacity: 0, translateX: 0, translateY: 20 }}
-                enter={{ opacity: 1, translateX: 0, translateY: 0 }}
-                leave={{ opacity: 0, translateX: 0, translateY: 20 }}>
+                appear={{ opacity: 0, zIndex: 2000, translateX: 0, translateY: 20 }}
+                enter={{ opacity: 1, zIndex: 2000, translateX: 0, translateY: 0 }}
+                leave={{ opacity: 0, zIndex: 0, translateX: 0, translateY: 20 }}>
                 {body}
             </Transition>
         );
+
+        ReactDOM.render(modal, this.layer);
     }
 }
 
