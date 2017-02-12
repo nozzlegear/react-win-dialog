@@ -1,6 +1,6 @@
 {
   "name": "react-win-dialog",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An attemp tto recreate the Dialog element from WinJS.",
   "main": "dist/index.js",
   "scripts": {
