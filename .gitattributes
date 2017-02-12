@@ -1,1 +1,4 @@
 ﻿tests/* linguist-vendored
+tests/ linguist-vendored
+tests/index.html linguist-vendored
+tests/test.tsx linguist-vendored
