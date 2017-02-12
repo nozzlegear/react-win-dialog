@@ -1,0 +1,47 @@
+{
+  "name": "react-win-dialog",
+  "version": "1.0.0",
+  "description": "An attemp tto recreate the Dialog element from WinJS.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "npm run tsc && npm run webpack && npm run css",
+    "css": "stylus -c --include-css -u autoprefixer-stylus ./css/all.styl -o ./dist",
+    "tsc": "tsc -p .",
+    "webpack": "webpack dist/index.js dist/bundled.js && webpack dist/tests/test.js dist/tests/bundled.js",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nozzlegear/react-win-dialog.git"
+  },
+  "keywords": [
+    "react",
+    "winjs",
+    "dialog",
+    "windows",
+    "uwp"
+  ],
+  "author": "Joshua Harms <joshua@nozzlegear.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nozzlegear/react-win-dialog/issues"
+  },
+  "homepage": "https://github.com/nozzlegear/react-win-dialog#readme",
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "react": "^15.4.2",
+    "react-motion": "^0.4.7",
+    "react-motion-ui-pack": "^0.10.2"
+  },
+  "devDependencies": {
+    "@types/classnames": "^0.0.32",
+    "@types/react": "^15.0.4",
+    "@types/react-motion": "^0.0.21",
+    "autoprefixer-stylus": "^0.13.0",
+    "concurrently": "^3.1.0",
+    "react-dom": "^15.4.2",
+    "stylus": "^0.54.5",
+    "typescript": "^2.1.5",
+    "webpack": "^2.2.1"
+  }
+}
