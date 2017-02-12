@@ -56,7 +56,32 @@ export class Dialog extends React.Component<IProps, any>
 
     render() {
         const props = this.props;
+        const buttons: JSX.Element[] = [];
         let body: JSX.Element = <div key={`react-win-dialog-empty`} />;
+
+        if (typeof(props.secondaryText) === "string") {
+            buttons.push(
+                <button
+                    key={`secondary-button`}
+                    type={`button`}
+                    className={`btn react-win-dialog-secondary-command`}
+                    onClick={e => this.props.onSecondaryClick(e)}>
+                    {props.secondaryText}
+                </button>
+            )
+        }
+
+        if (typeof(props.primaryText) === "string") {
+            buttons.push(
+                <button
+                    key={`primary-button`}
+                    type={`button`}
+                    className={Classes(`btn react-win-dialog-primary-command`, { blue: !props.danger, red: props.danger })}
+                    onClick={e => this.props.onPrimaryClick(e)}>
+                    {props.primaryText}
+                </button>
+            )
+        }
 
         if (props.open) {
             body = (
@@ -67,18 +92,7 @@ export class Dialog extends React.Component<IProps, any>
                             {this.props.children}
                         </div>
                         <div className="react-win-dialog-footer">
-                            <button
-                                type={`button`}
-                                className={`btn react-win-dialog-secondary-command`}
-                                onClick={e => this.props.onSecondaryClick(e)}>
-                                {props.secondaryText}
-                            </button>
-                            <button
-                                type={`button`}
-                                className={Classes(`btn react-win-dialog-primary-command`, { blue: !props.danger, red: props.danger })}
-                                onClick={e => this.props.onPrimaryClick(e)}>
-                                {props.primaryText}
-                            </button>
+                            {buttons}
                         </div>
                     </div>
                 </div>

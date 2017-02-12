@@ -4,10 +4,18 @@ import { spring } from "react-motion";
 import Transition from "react-motion-ui-pack";
 import Dialog from "../";
 
-export interface IState {
+export interface IState extends DialogState {
     items?: { id: number }[];
-    dialogOpen?: boolean;
 }
+
+export interface DialogState {
+    "two-buttons"?: boolean;
+    "one-button"?: boolean;
+    "no-buttons"?: boolean;
+    "danger"?: boolean;
+}
+
+type DialogProp = keyof DialogState;
 
 export default class TestHarness extends React.Component<any, IState> {
     constructor(props, context) {
@@ -17,7 +25,10 @@ export default class TestHarness extends React.Component<any, IState> {
             items: [{
                 id: Date.now(),
             }],
-            dialogOpen: false,
+            "danger": false,
+            "no-buttons": false,
+            "one-button": false,
+            "two-buttons": false,
         };
     }
 
@@ -43,21 +54,63 @@ export default class TestHarness extends React.Component<any, IState> {
         })
     }
 
-    hideDialog() {
+    private openDialog(prop: DialogProp) {
         this.setState({
-            dialogOpen: false,
-        }, () => {
-            console.log(`Set dialogOpen to false.`)
-        })
+            [prop]: true,
+        });
+    }
+
+    private hideDialog(prop: DialogProp) {
+        this.setState({
+            [prop]: false,
+        });
+    }
+
+    private buildDialog(prop: DialogProp) {
+
+        return (
+            <Dialog
+                key={prop}
+                open={this.state[prop] === true}
+                danger={prop === "danger"}
+                title={`React Win Dialog`}
+                primaryText={prop === "no-buttons" ? undefined : `Save Changes`}
+                secondaryText={prop === "no-buttons" || prop === "one-button" ? undefined : `Close`}
+                onSecondaryClick={e => this.hideDialog(prop)}>
+                <p>{`Wolf kogi whatever cold-pressed.  Nihil artisan semiotics williamsburg nulla.`}</p>
+                <div className={`control-group`}>
+                    <label>{`Username`}</label>
+                    <input type={`text`} placeholder={`john.doe@example.com`} />
+                </div>
+                <div className={`control-group`}>
+                    <label>{`Password`}</label>
+                    <input type={`password`} />
+                </div>
+            </Dialog>
+        )
     }
 
     public render() {
+        const dialogs: DialogProp[] = [
+            "two-buttons",
+            "one-button",
+            "no-buttons",
+            "danger",
+        ]
+        const buttons = dialogs.map(type => 
+            <button
+                key={type}
+                type={`button`}
+                onClick={e => this.openDialog(type)}>
+                {`Open ${type} dialog`}
+            </button>
+        );
 
         return (
             <div>
                 <button onClick={e => this.addItem()}>{`Add Item`}</button>
                 <button onClick={e => this.removeItem()}>{`Remove Item`}</button>
-                <button onClick={e => this.setState({ dialogOpen: true })}>{`Open Dialog`}</button>
+                {buttons}
                 <Transition
                     component={"ul"}
                     runOnMount={true}
@@ -66,22 +119,7 @@ export default class TestHarness extends React.Component<any, IState> {
                     leave={{ opacity: 0, translateY: spring(25, { stiffness: 400, damping: 10 }) }}>
                     {this.state.items.map((item, index) => <li key={item.id}>{`Item ${index + 1}`}</li>)}
                 </Transition>
-                <Dialog
-                    open={this.state.dialogOpen}
-                    title={`React Win Dialog`}
-                    primaryText={`Save Changes`}
-                    secondaryText={`Close`}
-                    onSecondaryClick={e => this.hideDialog()}>
-                    <p>{`Wolf kogi whatever cold-pressed.  Nihil artisan semiotics williamsburg nulla.`}</p>
-                    <div className={`control-group`}>
-                        <label>{`Username`}</label>
-                        <input type={`text`} placeholder={`john.doe@example.com`} />
-                    </div>
-                    <div className={`control-group`}>
-                        <label>{`Password`}</label>
-                        <input type={`password`} />
-                    </div>
-                </Dialog>
+                {dialogs.map(type => this.buildDialog(type))}
             </div>
         );
     }
