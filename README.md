@@ -63,7 +63,7 @@ render() {
 Note: React-Win-Dialog has full TypeScript definitions! You should automatically receive intellisense for all of the props documented below:
 
 | Name | Type | Required | Description |
-|-|-|-|-|
+|------|------|----------|-------------|
 | `title` | string | true | The dialog's title. |
 | `open` | boolean | true | Whether the dialog is open or not. |
 | `children` | element | true | The dialog's content body. |
