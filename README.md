@@ -1,7 +1,7 @@
 # react-win-dialog
 An attempt to recreate the Dialog element from WinJS, with full TypeScript definitions.
 
-![Screeshot of React Win Dialog](https://i.imgur.com/m60xkHu.png)
+![Screeshot of React Win Dialog](https://i.imgur.com/l20vhNe.png)
 
 ## Installation
 
