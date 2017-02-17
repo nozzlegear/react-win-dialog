@@ -72,6 +72,10 @@ Note: React-Win-Dialog has full TypeScript definitions! You should automatically
 | `secondaryText` | string | false | The dialog's secondary (left) button text. |
 | `onPrimaryClick` | function | false | Event handler called when the primary (right) button is clicked. |
 | `onSecondaryClick` | function | false | Event handler called when the secondary (left) button is clicked. |
+| `containerStyle` | object| false | CSS style object applied to the dialog container. |
+| `dialogStyle` | object | false | CSS style object applied to the dialog. |
+| `id` | string | false | Element id applied to the dialog container. |
+| `className` | string | false | CSS classnames applied to the dialog container. |
 
 ## Styling
 

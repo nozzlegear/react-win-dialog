@@ -32,6 +32,26 @@ export interface IProps extends React.Props<any> {
      *	Event handler called when the secondary (left) button is clicked.
      */
     onSecondaryClick?: (event: React.FormEvent<HTMLButtonElement>) => void;
+
+    /**
+     * Style object applied to the dialog container.
+     */
+    containerStyle?: React.CSSProperties;
+
+    /**
+     * Style object applied to the dialog.
+     */
+    dialogStyle?: React.CSSProperties;
+
+    /**
+     * Id applied to the dialog container.
+     */
+    id?: string;
+
+    /**
+     * Classname applied to the dialog container.
+     */
+    className?: string;
 }
 
 export class Dialog extends React.Component<IProps, any>
@@ -51,6 +71,10 @@ export class Dialog extends React.Component<IProps, any>
         secondaryText: React.PropTypes.string,
         onPrimaryClick: React.PropTypes.func,
         onSecondaryClick: React.PropTypes.func,
+        containerStyle: React.PropTypes.object,
+        dialogStyle: React.PropTypes.object,
+        id: React.PropTypes.string,
+        className: React.PropTypes.string,
     };
 
     /**
@@ -117,8 +141,14 @@ export class Dialog extends React.Component<IProps, any>
 
         if (props.open) {
             body = (
-                <div key={`react-win-dialog-container`} className={`react-win-dialog-container`}>
-                    <div className={Classes("react-win-dialog", { danger: props.danger || false })}>
+                <div 
+                    id={props.id}
+                    key={`react-win-dialog-container`} 
+                    className={`react-win-dialog-container ${props.className}`}
+                    style={props.containerStyle}>
+                    <div 
+                        className={Classes("react-win-dialog", { danger: props.danger || false })}
+                        style={props.dialogStyle}>
                         <p className="react-win-dialog-title">{props.title}</p>
                         <div className="react-win-dialog-content">
                             {this.props.children}
