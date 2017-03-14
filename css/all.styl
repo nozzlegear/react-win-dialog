@@ -1,19 +1,37 @@
-.react-win-dialog-container {
-    color = #333;
+base-z-index = 1999;
 
+full-page() {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     height: 100vh;
-    z-index: 2000;
+    width: 100vw;
+}
+
+.react-win-dialog-overlay {
+    display: none;
+
+    &.open {
+        full-page();
+        display: block;
+        z-index: base-z-index;
+        background: rgba(51,51,51,.7);
+        opacity: 1;
+    }
+}
+
+.react-win-dialog-container {
+    color = #333;
+
+    full-page();
+    z-index: base-z-index + 1;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     justify-content: center;
     align-content: center;
     outline: 0;
-    background: rgba(51,51,51,.7);
 
     .react-win-dialog {
         outline-color: #0078d7;
@@ -32,7 +50,7 @@
         background: rgb(242, 242, 242);
         color: color;
         font-size: 16px;
-	letter-spacing: normal;
+	    letter-spacing: normal;
 
         &.danger {
             outline-color: #e31c1c;

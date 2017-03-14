@@ -72,6 +72,7 @@ Note: React-Win-Dialog has full TypeScript definitions! You should automatically
 | `secondaryText` | string | false | The dialog's secondary (left) button text. |
 | `onPrimaryClick` | function | false | Event handler called when the primary (right) button is clicked. |
 | `onSecondaryClick` | function | false | Event handler called when the secondary (left) button is clicked. |
+| `overlayStyle` | object | false | CSS style object applied to the overlay container. |
 | `containerStyle` | object| false | CSS style object applied to the dialog container. |
 | `dialogStyle` | object | false | CSS style object applied to the dialog. |
 | `id` | string | false | Element id applied to the dialog container. |
@@ -84,6 +85,12 @@ By default, the dialog's buttons will be completely unstyled. It's recommended t
 If you'd like to style the buttons yourself, just use the following CSS rules:
 
 ```css
+.react-win-dialog-overlay {
+    /* This styles the semi-transparent background overlay. 
+     * Note that the dialog itself is *not* a child of this element.    
+     */
+}
+
 .react-win-dialog-container .react-win-dialog .btn.react-win-dialog-secondary-command {
     /* This styles the secondary (left) button. */
 }
