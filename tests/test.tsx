@@ -1,8 +1,8 @@
-import * as React from "react";
-import { render } from "react-dom";
-import { spring } from "react-motion";
-import Transition from "react-motion-ui-pack";
-import Dialog from "../";
+import * as React from 'react';
+import Dialog from '../';
+import Transition from 'react-motion-ui-pack';
+import { render } from 'react-dom';
+import { spring } from 'react-motion';
 
 export interface IState extends DialogState {
     items?: { id: number }[];
@@ -12,6 +12,7 @@ export interface DialogState {
     "two-buttons"?: boolean;
     "one-button"?: boolean;
     "no-buttons"?: boolean;
+    "no-animation"?: boolean;
     "danger"?: boolean;
 }
 
@@ -29,6 +30,7 @@ export default class TestHarness extends React.Component<any, IState> {
             "no-buttons": false,
             "one-button": false,
             "two-buttons": false,
+            "no-animation": false,
         };
     }
 
@@ -76,7 +78,8 @@ export default class TestHarness extends React.Component<any, IState> {
                 title={`React Win Dialog`}
                 primaryText={prop === "no-buttons" ? undefined : `Save Changes`}
                 secondaryText={prop === "no-buttons" || prop === "one-button" ? undefined : `Close`}
-                onSecondaryClick={e => this.hideDialog(prop)}>
+                onSecondaryClick={e => this.hideDialog(prop)}
+                animate={prop !== "no-animation"}>
                 <p>{`Wolf kogi whatever cold-pressed.  Nihil artisan semiotics williamsburg nulla.`}</p>
                 <div className={`control-group`}>
                     <label>{`Username`}</label>
@@ -95,6 +98,7 @@ export default class TestHarness extends React.Component<any, IState> {
             "two-buttons",
             "one-button",
             "no-buttons",
+            "no-animation",
             "danger",
         ]
         const buttons = dialogs.map(type => 

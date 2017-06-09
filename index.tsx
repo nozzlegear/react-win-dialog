@@ -58,6 +58,11 @@ export interface IProps extends React.Props<any> {
      * Classname applied to the dialog container.
      */
     className?: string;
+
+    /**
+     * Set to false to turn off animations. Defaults to true.
+     */
+    animate?: boolean;
 }
 
 export class Dialog extends React.Component<IProps, any>
@@ -81,6 +86,7 @@ export class Dialog extends React.Component<IProps, any>
         dialogStyle: PropTypes.object,
         id: PropTypes.string,
         className: PropTypes.string,
+        animate: PropTypes.bool,
     };
 
     /**
@@ -130,6 +136,8 @@ export class Dialog extends React.Component<IProps, any>
 
         if (props.open) {
             const buttons: JSX.Element[] = [];
+            // Default animate to true if the prop wasn't passed in.
+            const animate = typeof(props.animate) === "undefined" || props.animate === null ? true : props.animate;
 
             if (typeof (props.secondaryText) === "string") {
                 buttons.push(
@@ -155,32 +163,45 @@ export class Dialog extends React.Component<IProps, any>
                 )
             }
 
-            modal = (
-                <Transition
-                    component={`div`}
-                    runOnMount={true}
-                    appear={{ translateX: 0, translateY: 20 }}
-                    enter={{ translateX: 0, translateY: 0 }}
-                    leave={{ translateX: 0, translateY: 20 }}>
+            const body = (
+                <div
+                    id={props.id}
+                    key={`react-win-dialog-container`}
+                    className={Classes(`react-win-dialog-container`, props.className)}
+                    style={props.containerStyle}>
                     <div
-                        id={props.id}
-                        key={`react-win-dialog-container`}
-                        className={Classes(`react-win-dialog-container`, props.className)}
-                        style={props.containerStyle}>
-                        <div
-                            className={Classes("react-win-dialog", { danger: props.danger || false })}
-                            style={props.dialogStyle}>
-                            <p className="react-win-dialog-title">{props.title}</p>
-                            <div className="react-win-dialog-content">
-                                {this.props.children}
-                            </div>
-                            <div className="react-win-dialog-footer">
-                                {buttons}
-                            </div>
+                        className={Classes("react-win-dialog", { danger: props.danger || false })}
+                        style={props.dialogStyle}>
+                        <p className="react-win-dialog-title">{props.title}</p>
+                        <div className="react-win-dialog-content">
+                            {this.props.children}
+                        </div>
+                        <div className="react-win-dialog-footer">
+                            {buttons}
                         </div>
                     </div>
-                </Transition>
-            );
+                </div>
+            )
+
+            if (animate) {
+                modal = (
+                    <Transition
+                        component={`div`}
+                        runOnMount={true}
+                        appear={{ translateX: 0, translateY: 20 }}
+                        enter={{ translateX: 0, translateY: 0 }}
+                        leave={{ translateX: 0, translateY: 20 }}>
+                        {body}
+                    </Transition>
+                );
+            } else {
+                modal = (
+                    <div>
+                        {body}
+                    </div>
+                )
+            }
+
         }
 
         const overlay = <div className={Classes(`react-win-dialog-overlay`, { open: props.open })} style={props.overlayStyle} />;
