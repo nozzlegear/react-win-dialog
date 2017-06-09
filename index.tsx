@@ -1,7 +1,8 @@
+import * as Classes from 'classnames';
+import * as PropTypes from 'prop-types';
 import * as React from 'react';
-import * as Classes from "classnames";
-import * as ReactDOM from "react-dom";
-import Transition, { Transition as ITransition } from "react-motion-ui-pack";
+import * as ReactDOM from 'react-dom';
+import Transition, { Transition as ITransition } from 'react-motion-ui-pack';
 
 export interface IProps extends React.Props<any> {
     /**
@@ -66,20 +67,20 @@ export class Dialog extends React.Component<IProps, any>
     }
 
     static propTypes: Partial<Record<keyof IProps, any>> = {
-        title: React.PropTypes.string.isRequired,
-        open: React.PropTypes.bool.isRequired,
-        children: React.PropTypes.oneOfType([React.PropTypes.element.isRequired, React.PropTypes.arrayOf(React.PropTypes.element).isRequired]) ,
-        ref: React.PropTypes.any,
-        danger: React.PropTypes.bool,
-        primaryText: React.PropTypes.string,
-        secondaryText: React.PropTypes.string,
-        onPrimaryClick: React.PropTypes.func,
-        onSecondaryClick: React.PropTypes.func,
-        overlayStyle: React.PropTypes.object,
-        containerStyle: React.PropTypes.object,
-        dialogStyle: React.PropTypes.object,
-        id: React.PropTypes.string,
-        className: React.PropTypes.string,
+        title: PropTypes.string.isRequired,
+        open: PropTypes.bool.isRequired,
+        children: PropTypes.oneOfType([PropTypes.element.isRequired, PropTypes.arrayOf(PropTypes.element).isRequired]) ,
+        ref: PropTypes.any,
+        danger: PropTypes.bool,
+        primaryText: PropTypes.string,
+        secondaryText: PropTypes.string,
+        onPrimaryClick: PropTypes.func,
+        onSecondaryClick: PropTypes.func,
+        overlayStyle: PropTypes.object,
+        containerStyle: PropTypes.object,
+        dialogStyle: PropTypes.object,
+        id: PropTypes.string,
+        className: PropTypes.string,
     };
 
     /**
