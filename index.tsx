@@ -2,7 +2,6 @@ import * as Classes from 'classnames';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Transition, { Transition as ITransition } from 'react-motion-ui-pack';
 
 export interface IProps extends React.Props<any> {
     /**
@@ -58,11 +57,6 @@ export interface IProps extends React.Props<any> {
      * Classname applied to the dialog container.
      */
     className?: string;
-
-    /**
-     * Set to false to turn off animations. Defaults to true.
-     */
-    animate?: boolean;
 }
 
 export class Dialog extends React.Component<IProps, any>
@@ -74,7 +68,7 @@ export class Dialog extends React.Component<IProps, any>
     static propTypes: Partial<Record<keyof IProps, any>> = {
         title: PropTypes.string.isRequired,
         open: PropTypes.bool.isRequired,
-        children: PropTypes.oneOfType([PropTypes.element.isRequired, PropTypes.arrayOf(PropTypes.element).isRequired]) ,
+        children: PropTypes.oneOfType([PropTypes.element.isRequired, PropTypes.arrayOf(PropTypes.element).isRequired]),
         ref: PropTypes.any,
         danger: PropTypes.bool,
         primaryText: PropTypes.string,
@@ -86,12 +80,11 @@ export class Dialog extends React.Component<IProps, any>
         dialogStyle: PropTypes.object,
         id: PropTypes.string,
         className: PropTypes.string,
-        animate: PropTypes.bool,
     };
 
     /**
-     * It's necessary to render the modal element in a layer that's a direct child of 
-     * the body, to prevent the modal from getting constrained by parent element's 
+     * It's necessary to render the modal element in a layer that's a direct child of
+     * the body, to prevent the modal from getting constrained by parent element's
      * dimensions or styles. This layer is the container.
      */
     private layer: HTMLDivElement;
@@ -137,7 +130,7 @@ export class Dialog extends React.Component<IProps, any>
         if (props.open) {
             const buttons: JSX.Element[] = [];
             // Default animate to true if the prop wasn't passed in.
-            const animate = typeof(props.animate) === "undefined" || props.animate === null ? true : props.animate;
+            const animate = false
 
             if (typeof (props.secondaryText) === "string") {
                 buttons.push(
@@ -183,25 +176,11 @@ export class Dialog extends React.Component<IProps, any>
                 </div>
             )
 
-            if (animate) {
-                modal = (
-                    <Transition
-                        component={`div`}
-                        runOnMount={true}
-                        appear={{ translateX: 0, translateY: 20 }}
-                        enter={{ translateX: 0, translateY: 0 }}
-                        leave={{ translateX: 0, translateY: 20 }}>
-                        {body}
-                    </Transition>
-                );
-            } else {
-                modal = (
-                    <div>
-                        {body}
-                    </div>
-                )
-            }
-
+            modal = (
+                <div>
+                    {body}
+                </div>
+            )
         }
 
         const overlay = <div className={Classes(`react-win-dialog-overlay`, { open: props.open })} style={props.overlayStyle} />;

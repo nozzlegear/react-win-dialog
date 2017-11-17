@@ -75,7 +75,6 @@ Note: React-Win-Dialog has full TypeScript definitions! You should automatically
 | `overlayStyle` | object | false | CSS style object applied to the overlay container. |
 | `containerStyle` | object| false | CSS style object applied to the dialog container. |
 | `dialogStyle` | object | false | CSS style object applied to the dialog. |
-| `animate` | boolean | false | Set to false to turn off open and close animations. Defaults to true. |
 | `id` | string | false | Element id applied to the dialog container. |
 | `className` | string | false | CSS classnames applied to the dialog container. |
 
@@ -87,8 +86,8 @@ If you'd like to style the buttons yourself, just use the following CSS rules:
 
 ```css
 .react-win-dialog-overlay {
-    /* This styles the semi-transparent background overlay. 
-     * Note that the dialog itself is *not* a child of this element.    
+    /* This styles the semi-transparent background overlay.
+     * Note that the dialog itself is *not* a child of this element.
      */
 }
 

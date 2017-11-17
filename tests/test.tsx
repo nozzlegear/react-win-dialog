@@ -1,12 +1,8 @@
 import * as React from 'react';
 import Dialog from '../';
-import Transition from 'react-motion-ui-pack';
 import { render } from 'react-dom';
-import { spring } from 'react-motion';
 
-export interface IState extends DialogState {
-    items?: { id: number }[];
-}
+export interface IState extends DialogState { }
 
 export interface DialogState {
     "two-buttons"?: boolean;
@@ -23,9 +19,6 @@ export default class TestHarness extends React.Component<any, IState> {
         super(props, context);
 
         this.state = {
-            items: [{
-                id: Date.now(),
-            }],
             "danger": false,
             "no-buttons": false,
             "one-button": false,
@@ -35,26 +28,6 @@ export default class TestHarness extends React.Component<any, IState> {
     }
 
     public state: IState;
-
-    addItem() {
-        const items = [...this.state.items];
-        items.push({
-            id: Date.now(),
-        })
-
-        this.setState({
-            items,
-        })
-    }
-
-    removeItem() {
-        const items = [...this.state.items];
-        items.splice(items.length - 1, 1)
-
-        this.setState({
-            items,
-        })
-    }
 
     private openDialog(prop: DialogProp) {
         this.setState({
@@ -78,8 +51,7 @@ export default class TestHarness extends React.Component<any, IState> {
                 title={`React Win Dialog`}
                 primaryText={prop === "no-buttons" ? undefined : `Save Changes`}
                 secondaryText={prop === "no-buttons" || prop === "one-button" ? undefined : `Close`}
-                onSecondaryClick={e => this.hideDialog(prop)}
-                animate={prop !== "no-animation"}>
+                onSecondaryClick={e => this.hideDialog(prop)}>
                 <p>{`Wolf kogi whatever cold-pressed.  Nihil artisan semiotics williamsburg nulla.`}</p>
                 <div className={`control-group`}>
                     <label>{`Username`}</label>
@@ -101,7 +73,7 @@ export default class TestHarness extends React.Component<any, IState> {
             "no-animation",
             "danger",
         ]
-        const buttons = dialogs.map(type => 
+        const buttons = dialogs.map(type =>
             <button
                 key={type}
                 type={`button`}
@@ -112,17 +84,6 @@ export default class TestHarness extends React.Component<any, IState> {
 
         return (
             <div>
-                <button onClick={e => this.addItem()}>{`Add Item`}</button>
-                <button onClick={e => this.removeItem()}>{`Remove Item`}</button>
-                {buttons}
-                <Transition
-                    component={"ul"}
-                    runOnMount={true}
-                    appear={{ opacity: 0, translateY: 25 }}
-                    enter={{ opacity: 1, translateY: spring(0, { stiffness: 400, damping: 10 }) }}
-                    leave={{ opacity: 0, translateY: spring(25, { stiffness: 400, damping: 10 }) }}>
-                    {this.state.items.map((item, index) => <li key={item.id}>{`Item ${index + 1}`}</li>)}
-                </Transition>
                 {dialogs.map(type => this.buildDialog(type))}
             </div>
         );
