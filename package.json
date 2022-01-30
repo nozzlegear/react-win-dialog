@@ -4,10 +4,10 @@
   "description": "An attempt to recreate the Dialog element from WinJS.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npm run tsc && npm run webpack && npm run css",
-    "css": "stylus -c --include-css -u autoprefixer-stylus ./css/all.styl -o ./dist",
-    "tsc": "tsc -p .",
-    "webpack": "webpack dist/index.js dist/bundled.js && webpack dist/tests/test.js dist/tests/bundled.js",
+    "build": "yarn run validate && yarn run build:ts && yarn run build:css",
+    "build:css": "stylus -c --include-css -u autoprefixer-stylus ./css/all.styl -o ./dist",
+    "build:ts": "esbuild --outdir=dist --sourcemap index.tsx && esbuild --bundle --minify --outdir=dist --sourcemap tests/test.tsx",
+    "validate": "tsc -p . --skipLibCheck --noEmit",
     "prepublishOnly": "npm run build"
   },
   "repository": {
@@ -36,6 +36,7 @@
     "@types/react-dom": "^17.0.11",
     "autoprefixer-stylus": "^1.0.0",
     "concurrently": "^7.0.0",
+    "esbuild": "^0.14.14",
     "react-dom": "^17.0.2",
     "stylus": "^0.56.0",
     "typescript": "^4.5.5",
