@@ -6,6 +6,7 @@
         "sourceMap": false,
         "jsx": "react",
         "outDir": "dist",
-        "declaration": true
+        "declaration": true,
+        "strict": true
     }
 }
