@@ -59,6 +59,7 @@ export type Props = React.PropsWithChildren<{
 }>
 
 export function Dialog(props: Props): JSX.Element {
+    const ignore = () => {};
     let modal: JSX.Element = <noscript />;
 
     if (props.open) {
@@ -72,7 +73,7 @@ export function Dialog(props: Props): JSX.Element {
                     key={`secondary-button`}
                     type={`button`}
                     className={`btn react-win-dialog-secondary-command`}
-                    onClick={e => this.props.onSecondaryClick(e)}>
+                    onClick={props.onSecondaryClick || ignore}>
                     {props.secondaryText}
                 </button>
             )
@@ -84,7 +85,7 @@ export function Dialog(props: Props): JSX.Element {
                     key={`primary-button`}
                     type={`button`}
                     className={Classes(`btn react-win-dialog-primary-command`, { blue: !props.danger, red: props.danger })}
-                    onClick={e => this.props.onPrimaryClick(e)}>
+                    onClick={props.onPrimaryClick || ignore}>
                     {props.primaryText}
                 </button>
             )
@@ -101,7 +102,7 @@ export function Dialog(props: Props): JSX.Element {
                     style={props.dialogStyle}>
                     <p className="react-win-dialog-title">{props.title}</p>
                     <div className="react-win-dialog-content">
-                        {this.props.children}
+                        {props.children}
                     </div>
                     <div className="react-win-dialog-footer">
                         {buttons}
