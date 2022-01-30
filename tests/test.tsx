@@ -2,6 +2,9 @@ import * as React from 'react';
 import { Dialog } from '../';
 import { render } from 'react-dom';
 
+import "../dist/all.css";
+import "../node_modules/utilities.styl/all.css";
+
 export interface IState extends DialogState { }
 
 export interface DialogState {
@@ -84,6 +87,7 @@ export default class TestHarness extends React.Component<any, IState> {
 
         return (
             <div>
+                {buttons}
                 {dialogs.map(type => this.buildDialog(type))}
             </div>
         );

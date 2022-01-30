@@ -6,7 +6,8 @@
   "scripts": {
     "build": "yarn run validate && yarn run build:ts && yarn run build:css",
     "build:css": "stylus -c --include-css -u autoprefixer-stylus ./css/all.styl -o ./dist",
-    "build:ts": "esbuild --outdir=dist --sourcemap index.tsx && esbuild --bundle --minify --outdir=dist --sourcemap tests/test.tsx",
+    "build:ts": "esbuild --outdir=dist --sourcemap index.tsx",
+    "test": "yarn build && yarn esbuild --bundle --serve=localhost:5000 --servedir=tests tests/test.tsx",
     "validate": "tsc -p . --skipLibCheck --noEmit",
     "prepublishOnly": "npm run build"
   },
