@@ -1,9 +1,8 @@
-import * as Classes from 'classnames';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import Classes from "classnames";
 
-export interface IProps extends React.Props<any> {
+export type Props = React.PropsWithChildren<{
     /**
      * The dialog's title.
      */
@@ -57,137 +56,78 @@ export interface IProps extends React.Props<any> {
      * Classname applied to the dialog container.
      */
     className?: string;
-}
+}>
 
-export class Dialog extends React.Component<IProps, any>
-{
-    constructor(props: IProps) {
-        super(props);
-    }
+export function Dialog(props: Props): JSX.Element {
+    let modal: JSX.Element = <noscript />;
 
-    static propTypes: Partial<Record<keyof IProps, any>> = {
-        title: PropTypes.string.isRequired,
-        open: PropTypes.bool.isRequired,
-        children: PropTypes.oneOfType([PropTypes.element.isRequired, PropTypes.arrayOf(PropTypes.element).isRequired]),
-        ref: PropTypes.any,
-        danger: PropTypes.bool,
-        primaryText: PropTypes.string,
-        secondaryText: PropTypes.string,
-        onPrimaryClick: PropTypes.func,
-        onSecondaryClick: PropTypes.func,
-        overlayStyle: PropTypes.object,
-        containerStyle: PropTypes.object,
-        dialogStyle: PropTypes.object,
-        id: PropTypes.string,
-        className: PropTypes.string,
-    };
+    if (props.open) {
+        const buttons: JSX.Element[] = [];
+        // Default animate to true if the prop wasn't passed in.
+        const animate = false
 
-    /**
-     * It's necessary to render the modal element in a layer that's a direct child of
-     * the body, to prevent the modal from getting constrained by parent element's
-     * dimensions or styles. This layer is the container.
-     */
-    private layer: HTMLDivElement;
-    private overlayContainer: HTMLDivElement;
-
-    render() {
-        return <noscript />
-    }
-
-    componentDidMount() {
-        // Appending to the body is easier than managing the z-index of
-        // everything on the page.  It's also better for accessibility and
-        // makes stacking a snap (since components will stack in mount order).
-        this.layer = document.createElement('div');
-        this.overlayContainer = document.createElement('div');
-
-        document.body.appendChild(this.layer);
-        document.body.appendChild(this.overlayContainer);
-
-        this.renderLayer();
-    }
-
-    componentDidUpdate() {
-        this.renderLayer();
-    }
-
-    componentWillUnmount() {
-        this.unrenderLayer();
-        document.body.removeChild(this.layer);
-        document.body.removeChild(this.overlayContainer);
-    }
-
-    private unrenderLayer() {
-        ReactDOM.unmountComponentAtNode(this.layer);
-        ReactDOM.unmountComponentAtNode(this.overlayContainer);
-    }
-
-    private renderLayer() {
-        const props = this.props;
-        let modal: JSX.Element = <noscript />;
-
-
-        if (props.open) {
-            const buttons: JSX.Element[] = [];
-            // Default animate to true if the prop wasn't passed in.
-            const animate = false
-
-            if (typeof (props.secondaryText) === "string") {
-                buttons.push(
-                    <button
-                        key={`secondary-button`}
-                        type={`button`}
-                        className={`btn react-win-dialog-secondary-command`}
-                        onClick={e => this.props.onSecondaryClick(e)}>
-                        {props.secondaryText}
-                    </button>
-                )
-            }
-
-            if (typeof (props.primaryText) === "string") {
-                buttons.push(
-                    <button
-                        key={`primary-button`}
-                        type={`button`}
-                        className={Classes(`btn react-win-dialog-primary-command`, { blue: !props.danger, red: props.danger })}
-                        onClick={e => this.props.onPrimaryClick(e)}>
-                        {props.primaryText}
-                    </button>
-                )
-            }
-
-            const body = (
-                <div
-                    id={props.id}
-                    key={`react-win-dialog-container`}
-                    className={Classes(`react-win-dialog-container`, props.className)}
-                    style={props.containerStyle}>
-                    <div
-                        className={Classes("react-win-dialog", { danger: props.danger || false })}
-                        style={props.dialogStyle}>
-                        <p className="react-win-dialog-title">{props.title}</p>
-                        <div className="react-win-dialog-content">
-                            {this.props.children}
-                        </div>
-                        <div className="react-win-dialog-footer">
-                            {buttons}
-                        </div>
-                    </div>
-                </div>
-            )
-
-            modal = (
-                <div>
-                    {body}
-                </div>
+        if (typeof (props.secondaryText) === "string") {
+            buttons.push(
+                <button
+                    key={`secondary-button`}
+                    type={`button`}
+                    className={`btn react-win-dialog-secondary-command`}
+                    onClick={e => this.props.onSecondaryClick(e)}>
+                    {props.secondaryText}
+                </button>
             )
         }
 
-        const overlay = <div className={Classes(`react-win-dialog-overlay`, { open: props.open })} style={props.overlayStyle} />;
+        if (typeof (props.primaryText) === "string") {
+            buttons.push(
+                <button
+                    key={`primary-button`}
+                    type={`button`}
+                    className={Classes(`btn react-win-dialog-primary-command`, { blue: !props.danger, red: props.danger })}
+                    onClick={e => this.props.onPrimaryClick(e)}>
+                    {props.primaryText}
+                </button>
+            )
+        }
 
-        ReactDOM.render(overlay, this.overlayContainer);
-        ReactDOM.render(modal, this.layer);
+        const body = (
+            <div
+                id={props.id}
+                key={`react-win-dialog-container`}
+                className={Classes(`react-win-dialog-container`, props.className)}
+                style={props.containerStyle}>
+                <div
+                    className={Classes("react-win-dialog", { danger: props.danger || false })}
+                    style={props.dialogStyle}>
+                    <p className="react-win-dialog-title">{props.title}</p>
+                    <div className="react-win-dialog-content">
+                        {this.props.children}
+                    </div>
+                    <div className="react-win-dialog-footer">
+                        {buttons}
+                    </div>
+                </div>
+            </div>
+        )
+
+        modal = (
+            <div>
+                {body}
+            </div>
+        )
     }
-}
 
-export default Dialog;
+    const modalContainer = (
+        <div 
+            className={Classes(`react-win-dialog-overlay`, { open: props.open })} 
+            style={props.overlayStyle}
+        >
+            {modal}
+        </div>
+    )
+
+    return ReactDOM.createPortal(
+        modalContainer,
+        document.body
+    );
+}

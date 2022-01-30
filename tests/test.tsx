@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Dialog from '../';
+import { Dialog } from '../';
 import { render } from 'react-dom';
 
 export interface IState extends DialogState { }
