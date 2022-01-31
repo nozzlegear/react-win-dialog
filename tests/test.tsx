@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Dialog } from '../';
+import { Dialog } from '../index';
 import { render } from 'react-dom';
 
 import "../dist/all.css";
