@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Classes from "classnames";
 import { Dialog } from '../index';
 import { render } from 'react-dom';
 
@@ -13,6 +14,7 @@ export interface DialogState {
     "no-buttons"?: boolean;
     "no-animation"?: boolean;
     "danger"?: boolean;
+    "long-body"?: boolean;
 }
 
 type DialogProp = keyof DialogState;
@@ -27,6 +29,7 @@ export default class TestHarness extends React.Component<any, IState> {
             "one-button": false,
             "two-buttons": false,
             "no-animation": false,
+            "long-body": false
         };
     }
 
@@ -64,6 +67,7 @@ export default class TestHarness extends React.Component<any, IState> {
                     <label>{`Password`}</label>
                     <input type={`password`} />
                 </div>
+                <div className={Classes({ "long-body": prop === "long-body" })} />
             </Dialog>
         )
     }
@@ -75,6 +79,7 @@ export default class TestHarness extends React.Component<any, IState> {
             "no-buttons",
             "no-animation",
             "danger",
+            "long-body"
         ]
         const buttons = dialogs.map(type =>
             <button

@@ -51,9 +51,16 @@ full-page() {
         color: color;
         font-size: 16px;
 	    letter-spacing: normal;
+        display: flex;
+        flex-direction: column;
 
         &.danger {
             outline-color: #e31c1c;
+        }
+
+        .react-win-dialog-content {
+            overflow: scroll;
+            flex-grow: 1;
         }
 
         .react-win-dialog-title {
