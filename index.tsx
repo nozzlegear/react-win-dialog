@@ -62,6 +62,21 @@ export function Dialog(props: Props): JSX.Element {
     const ignore = () => {};
     let modal: JSX.Element = <noscript />;
 
+    // Save the body's default overflow so it can be reapplied when the modal is closed
+    const defaultOverflow = React.useMemo(() => {
+        if (props.open) {
+            return document.body.style.overflow;
+        }
+    }, [props.open]);
+
+    React.useEffect(() => {
+        if (props.open) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = defaultOverflow || "";
+        }
+    }, [props.open]);
+
     if (props.open) {
         const buttons: JSX.Element[] = [];
         // Default animate to true if the prop wasn't passed in.
