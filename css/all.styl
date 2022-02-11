@@ -86,7 +86,25 @@ full-page() {
 
             > button {
                 flex: 1;
+                color: #000;
+                font-weight: 400;
+                font-size: 16px;
+                padding: 5px 10px;
                 margin: 0 2px;
+                border-width: 2px;
+                border-radius: 0;
+                border-style: solid;
+                background-clip: border-box;
+                background-color: rgba(0,0,0,.2);
+                border-color: transparent;
+                -webkit-appearance: none;
+                line-height: 1.333;
+                touch-action: manipulation;
+                cursor: pointer;
+                text-transform: none;
+                overflow: visible;
+                text-decoration: none;
+                text-align: center;
 
                 &:first-child {
                     margin-left: 0;
@@ -94,6 +112,28 @@ full-page() {
 
                 &:last-child {
                     margin-right: 0;
+                }
+
+                &.primary {
+                    background-color: #0078d7;
+                    color: #fff;
+
+                    &.danger {
+                        background-color: #e31c1c;
+                    }
+                }
+
+                &:hover {
+                    border-color: rgba(0,0,0,.4);
+                    text-decoration: none;
+
+                    &:not(.primary):not(.danger) {
+                        color: #000;
+                    }
+                }
+
+                &:active {
+                    background-color: rgba(0,0,0,.4);
                 }
             }
         }

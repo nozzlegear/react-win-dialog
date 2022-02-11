@@ -99,7 +99,7 @@ export function Dialog(props: Props): JSX.Element {
                 <button
                     key={`primary-button`}
                     type={`button`}
-                    className={Classes(`btn react-win-dialog-primary-command`, { blue: !props.danger, red: props.danger })}
+                    className={Classes(`btn react-win-dialog-primary-command primary`, { danger: props.danger })}
                     onClick={props.onPrimaryClick || ignore}>
                     {props.primaryText}
                 </button>

@@ -4,7 +4,6 @@ import { Dialog } from '../index';
 import { render } from 'react-dom';
 
 import "../dist/all.css";
-import "../node_modules/utilities.styl/all.css";
 
 export interface IState extends DialogState { }
 

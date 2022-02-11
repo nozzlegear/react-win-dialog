@@ -80,9 +80,7 @@ Note: React-Win-Dialog has full TypeScript definitions! You should automatically
 
 ## Styling
 
-By default, the dialog's buttons will be completely unstyled. It's recommended that you use the `forms.css` file from the `utilities.styl` NPM package to get the button and input controls shown in the screenshot above.
-
-If you'd like to style the buttons yourself, just use the following CSS rules:
+If you'd like to style the modal buttons yourself, just use the following CSS rules:
 
 ```css
 .react-win-dialog-overlay {
@@ -95,7 +93,7 @@ If you'd like to style the buttons yourself, just use the following CSS rules:
     /* This styles the secondary (left) button. */
 }
 
-.react-win-dialog-container .react-win-dialog .btn.blue.react-win-dialog-primary-command {
+.react-win-dialog-container .react-win-dialog .btn.primary.react-win-dialog-primary-command {
     /* This styles the primary (primary) button. */
 }
 
@@ -103,7 +101,7 @@ If you'd like to style the buttons yourself, just use the following CSS rules:
     /* This styles the dialog when `danger=true` is passed to the component. */
 }
 
-.react-win-dialog-container .react-win-dialog.danger .btn.red.react-win-dialog-primary-command {
+.react-win-dialog-container .react-win-dialog.danger .btn.danger.react-win-dialog-primary-command {
     /* This styles the primary (right) button when `danger=true` is passed to the component. */
 }
 ```
