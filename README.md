@@ -72,6 +72,9 @@ Note: React-Win-Dialog has full TypeScript definitions! You should automatically
 | `secondaryText` | string | false | The dialog's secondary (left) button text. |
 | `onPrimaryClick` | function | false | Event handler called when the primary (right) button is clicked. |
 | `onSecondaryClick` | function | false | Event handler called when the secondary (left) button is clicked. |
+| `loading` | boolean | false | Indicates that data is being loaded or saved. Default `false`. |
+| `loadingComponent` | React.ReactNode | false | A custom component to use as the loading indicator when `loading` is true. Defaults to a `<progress />` element. |
+| `loadingHidesButtons` | boolean | false | Whether the dialog should hide its primary and secondary buttons when `loading` is true. Defaults to `true`.|
 | `overlayStyle` | object | false | CSS style object applied to the overlay container. |
 | `containerStyle` | object| false | CSS style object applied to the dialog container. |
 | `dialogStyle` | object | false | CSS style object applied to the dialog. |
@@ -103,5 +106,13 @@ If you'd like to style the modal buttons yourself, just use the following CSS ru
 
 .react-win-dialog-container .react-win-dialog.danger .btn.danger.react-win-dialog-primary-command {
     /* This styles the primary (right) button when `danger=true` is passed to the component. */
+}
+
+.react-win-dialog-container .react-win-dialog .react-win-dialog-content .react-win-dialog-loading-container {
+    /* This styles the loading indicator container when `loading=true` is passed to the component. */
+}
+
+.react-win-dialog-container .react-win-dialog .react-win-dialog-content .react-win-dialog-loading-container progress.react-win-dialog-loading-bar {
+    /* This styles the default progress bar used as the loading indicator when `loading=true` is passed to the component without a custom loading indicator component. */
 }
 ```

@@ -16,6 +16,20 @@ export type Props = React.PropsWithChildren<{
      */
     danger?: boolean;
     /**
+     * Indicates that data is being loaded or saved.
+     */
+    loading?: boolean;
+    /**
+     * A custom component to use as the loading indicator when {@link Props.loading} is true.
+     * @default `<progress />`
+     */
+    loadingComponent?: React.ReactNode | (() => React.ReactNode);
+    /**
+     * Whether the dialog should hide its primary and secondary buttons when {@link Props.loading} is true.
+     * 
+     */
+    loadingHidesButtons?: boolean;
+    /**
      * The dialog's primary (right) button text.
      */
     primaryText?: string;
@@ -31,27 +45,22 @@ export type Props = React.PropsWithChildren<{
      *	Event handler called when the secondary (left) button is clicked.
      */
     onSecondaryClick?: (event: React.FormEvent<HTMLButtonElement>) => void;
-
     /**
      * Style object applied to the dialog's overlay.
      */
     overlayStyle?: React.CSSProperties;
-
     /**
      * Style object applied to the dialog container.
      */
     containerStyle?: React.CSSProperties;
-
     /**
      * Style object applied to the dialog.
      */
     dialogStyle?: React.CSSProperties;
-
     /**
      * Id applied to the dialog container.
      */
     id?: string;
-
     /**
      * Classname applied to the dialog container.
      */
@@ -81,29 +90,58 @@ export function Dialog(props: Props): JSX.Element {
         const buttons: JSX.Element[] = [];
         // Default animate to true if the prop wasn't passed in.
         const animate = false
+        const loading = props.loading ?? false;
+        const loadingHidesButtons = props.loadingHidesButtons ?? true;
 
-        if (typeof (props.secondaryText) === "string") {
-            buttons.push(
-                <button
-                    key={`secondary-button`}
-                    type={`button`}
-                    className={`btn react-win-dialog-secondary-command`}
-                    onClick={props.onSecondaryClick || ignore}>
-                    {props.secondaryText}
-                </button>
+        const LoadingIndicator = () => {
+            if (props.loading !== true) {
+                return <React.Fragment />;
+            }
+
+            let indicator: React.ReactNode;
+
+            if (props.loadingComponent === null || props.loadingComponent === undefined) {
+                indicator = <progress className="react-win-dialog-loading-bar" />;
+            }
+            else if (typeof props.loadingComponent === "function") {
+                indicator = props.loadingComponent();
+            } else {
+                indicator = props.loadingComponent;
+            }
+
+            return (
+                <div className="react-win-dialog-loading-container">
+                    {indicator}
+                </div>
             )
         }
 
-        if (typeof (props.primaryText) === "string") {
-            buttons.push(
-                <button
-                    key={`primary-button`}
-                    type={`button`}
-                    className={Classes(`btn react-win-dialog-primary-command primary`, { danger: props.danger })}
-                    onClick={props.onPrimaryClick || ignore}>
-                    {props.primaryText}
-                </button>
-            )
+        if (loading === false || loadingHidesButtons === false) {
+            if (typeof (props.secondaryText) === "string") {
+                buttons.push(
+                    <button
+                        key={`secondary-button`}
+                        type={`button`}
+                        className={`btn react-win-dialog-secondary-command`}
+                        onClick={props.onSecondaryClick || ignore}
+                    >
+                        {props.secondaryText}
+                    </button>
+                )
+            }
+
+            if (typeof (props.primaryText) === "string") {
+                buttons.push(
+                    <button
+                        key={`primary-button`}
+                        type={`button`}
+                        className={Classes(`btn react-win-dialog-primary-command primary`, { danger: props.danger })}
+                        onClick={props.onPrimaryClick || ignore}
+                    >
+                        {props.primaryText}
+                    </button>
+                )
+            }
         }
 
         const body = (
@@ -118,6 +156,7 @@ export function Dialog(props: Props): JSX.Element {
                     <p className="react-win-dialog-title">{props.title}</p>
                     <div className="react-win-dialog-content">
                         {props.children}
+                        <LoadingIndicator />
                     </div>
                     <div className="react-win-dialog-footer">
                         {buttons}
