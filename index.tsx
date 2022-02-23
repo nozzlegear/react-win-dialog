@@ -69,7 +69,7 @@ export type Props = React.PropsWithChildren<{
 
 export function Dialog(props: Props): JSX.Element {
     const ignore = () => {};
-    let modal: JSX.Element = <noscript />;
+    let modal: JSX.Element = <React.Fragment />;
 
     // Save the body's default overflow so it can be reapplied when the modal is closed
     const defaultOverflow = React.useMemo(() => {
