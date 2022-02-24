@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "yarn run validate && yarn run build:ts && yarn run build:css",
-    "build:css": "stylus -c --include-css -u autoprefixer-stylus ./css/all.styl -o ./dist",
+    "build:css": "stylus -c --include-css -o ./dist ./css/all.styl",
     "build:ts": "esbuild --outdir=dist --sourcemap index.tsx && tsc --emitDeclarationOnly",
     "test": "yarn build && yarn esbuild --bundle --serve=localhost:5000 --servedir=. tests/test.tsx",
     "validate": "tsc -p . --skipLibCheck --noEmit",
@@ -36,7 +36,6 @@
   "devDependencies": {
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.11",
-    "autoprefixer-stylus": "^1.0.0",
     "esbuild": "^0.14.23",
     "react-dom": "^17.0.2",
     "stylus": "^0.56.0",
