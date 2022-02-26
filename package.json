@@ -1,6 +1,6 @@
 {
   "name": "@nozzlegear/react-win-dialog",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "An attempt to recreate the Dialog element from WinJS.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
