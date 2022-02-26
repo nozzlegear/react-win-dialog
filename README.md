@@ -1,4 +1,4 @@
-# react-win-dialog
+# @nozzlegear/react-win-dialog
 An attempt to recreate the Dialog element from WinJS, with full TypeScript definitions.
 
 ![Screeshot of React Win Dialog](https://i.imgur.com/l20vhNe.png)
@@ -8,13 +8,13 @@ An attempt to recreate the Dialog element from WinJS, with full TypeScript defin
 With [Yarn](https://github.com/yarnpkg/yarn):
 
 ```shell
-yarn install react-win-dialog
+yarn install @nozzlegear/react-win-dialog
 ```
 
-Or from [NPM](https://npmjs.com/package/react-win-dialog):
+Or from [NPM](https://npmjs.com/package/@nozzlegear/react-win-dialog):
 
 ```shell
-npm install react-win-dialog --save
+npm install @nozzlegear/react-win-dialog --save
 ```
 
 ## Importing
@@ -22,19 +22,19 @@ npm install react-win-dialog --save
 Import React-Win-Dialog via ES6 default import:
 
 ```js
-import Dialog from "react-win-dialog";
+import Dialog from "@nozzlegear/react-win-dialog";
 ```
 
 Or via Node's require:
 
 ```js
-const Dialog = require("react-win-dialog").default;
+const Dialog = require("@nozzlegear/react-win-dialog").default;
 ```
 
 ## Example
 
 ```js
-import Dialog from "react-win-dialog";
+import Dialog from "@nozzlegear/react-win-dialog";
 
 render() {
     return (
