@@ -73,10 +73,8 @@ export function Dialog(props: Props): JSX.Element {
 
     // Save the body's default overflow so it can be reapplied when the modal is closed
     const defaultOverflow = React.useMemo(() => {
-        if (props.open) {
-            return document.body.style.overflow;
-        }
-    }, [props.open]);
+        return document.body.style.overflow;
+    }, []);
 
     React.useEffect(() => {
         if (props.open) {
