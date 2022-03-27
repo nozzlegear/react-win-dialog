@@ -82,6 +82,10 @@ export function Dialog(props: Props): JSX.Element {
         } else {
             document.body.style.overflow = defaultOverflow || "";
         }
+
+        return () => {
+            document.body.style.overflow = defaultOverflow || "";
+        }
     }, [props.open]);
 
     if (props.open) {
