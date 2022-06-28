@@ -76,6 +76,7 @@ Note: React-Win-Dialog has full TypeScript definitions! You should automatically
 | `loadingComponent` | React.ReactNode | false | A custom component to use as the loading indicator when `loading` is true. Defaults to a `<progress />` element. |
 | `loadingHidesButtons` | boolean | false | Whether the dialog should hide its primary and secondary buttons when `loading` is true. Defaults to `true`.|
 | `overlayStyle` | object | false | CSS style object applied to the overlay container. |
+| `overlayPreventsScrolling` | boolean | true | Whether the dialog should prevent scrolling of the body elements under/behind the dialog when the dialog is open. |
 | `containerStyle` | object| false | CSS style object applied to the dialog container. |
 | `dialogStyle` | object | false | CSS style object applied to the dialog. |
 | `id` | string | false | Element id applied to the dialog container. |

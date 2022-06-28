@@ -50,6 +50,11 @@ export type Props = React.PropsWithChildren<{
      */
     overlayStyle?: React.CSSProperties;
     /**
+     * Whether the dialog should prevent scrolling of the body elements under/behind the dialog when the dialog is open. 
+     * @default true
+     */
+    overlayPreventsScrolling?: boolean;
+    /**
      * Style object applied to the dialog container.
      */
     containerStyle?: React.CSSProperties;
@@ -69,6 +74,7 @@ export type Props = React.PropsWithChildren<{
 
 export function Dialog(props: Props): JSX.Element {
     const ignore = () => {};
+    const overlayPreventsScrolling = props.overlayPreventsScrolling !== false;
     let modal: JSX.Element = <React.Fragment />;
 
     // Save the body's default overflow so it can be reapplied when the modal is closed
@@ -77,14 +83,18 @@ export function Dialog(props: Props): JSX.Element {
     }, []);
 
     React.useEffect(() => {
-        if (props.open) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = defaultOverflow || "";
+        if (overlayPreventsScrolling) {
+            if (props.open) {
+                document.body.style.overflow = "hidden";
+            } else {
+                document.body.style.overflow = defaultOverflow || "";
+            }
         }
 
         return () => {
-            document.body.style.overflow = defaultOverflow || "";
+            if (overlayPreventsScrolling) {
+                document.body.style.overflow = defaultOverflow || "";
+            }
         }
     }, [props.open]);
 
