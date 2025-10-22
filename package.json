@@ -43,7 +43,7 @@
   },
   "homepage": "https://github.com/nozzlegear/react-win-dialog#readme",
   "dependencies": {
-    "classnames": "^2.3.1"
+    "classnames": "^2.5.1"
   },
   "devDependencies": {
     "@types/react": "^19.2.2",
