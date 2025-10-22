@@ -1,18 +1,18 @@
-import * as React from 'react';
+import * as React from "react";
 import Classes from "classnames";
-import { Dialog } from '../index';
-import { createRoot } from 'react-dom/client';
+import { Dialog } from "../index";
+import { createRoot } from "react-dom/client";
 
-export interface IState extends DialogState { }
+export interface IState extends DialogState {}
 
 export interface DialogState {
     "two-buttons"?: boolean;
     "one-button"?: boolean;
     "no-buttons"?: boolean;
     "no-animation"?: boolean;
-    "danger"?: boolean;
+    danger?: boolean;
     "long-body"?: boolean;
-    "loading"?: boolean;
+    loading?: boolean;
     "loading-component"?: boolean;
     "loading-function"?: boolean;
     "loading-dont-hide-buttons"?: boolean;
@@ -25,16 +25,16 @@ export default class TestHarness extends React.Component<any, IState> {
         super(props, context);
 
         this.state = {
-            "danger": false,
+            danger: false,
             "no-buttons": false,
             "one-button": false,
             "two-buttons": false,
             "no-animation": false,
             "long-body": false,
-            "loading": false,
+            loading: false,
             "loading-component": false,
             "loading-function": false,
-            "loading-dont-hide-buttons": false
+            "loading-dont-hide-buttons": false,
         };
     }
 
@@ -53,15 +53,15 @@ export default class TestHarness extends React.Component<any, IState> {
     }
 
     private buildDialog(prop: DialogProp) {
-        const loading = ["loading",
-            "loading-component",
-            "loading-function",
-            "loading-dont-hide-buttons"
-        ].some(p => p === prop);
-        const loadingComponent: React.JSX.ElementType | null = prop === "loading-component"
-            ? "hello, this is a custom loading component wow" : prop === "loading-function"
-            ? () => (<div>{"Custom loading component function"}</div>)
-            : null;
+        const loading = ["loading", "loading-component", "loading-function", "loading-dont-hide-buttons"].some(
+            (p) => p === prop,
+        );
+        const loadingComponent: React.JSX.ElementType | null =
+            prop === "loading-component"
+                ? "hello, this is a custom loading component wow"
+                : prop === "loading-function"
+                  ? () => <div>{"Custom loading component function"}</div>
+                  : null;
         const loadingHidesButtons = prop === "loading-dont-hide-buttons" ? false : undefined;
 
         return (
@@ -75,20 +75,20 @@ export default class TestHarness extends React.Component<any, IState> {
                 loadingHidesButtons={loadingHidesButtons}
                 primaryText={prop === "no-buttons" ? undefined : `Save Changes`}
                 secondaryText={prop === "no-buttons" || prop === "one-button" ? undefined : `Close`}
-                onSecondaryClick={e => this.hideDialog(prop)}
+                onSecondaryClick={() => this.hideDialog(prop)}
             >
                 <p>{`Wolf kogi whatever cold-pressed.  Nihil artisan semiotics williamsburg nulla.`}</p>
                 <div className={`control-group`}>
-                    <label>{`Username`}</label>
-                    <input type={`text`} placeholder={`john.doe@example.com`} />
+                    <label htmlFor="username">{`Username`}</label>
+                    <input name="username" type={`text`} placeholder={`john.doe@example.com`} />
                 </div>
                 <div className={`control-group`}>
-                    <label>{`Password`}</label>
-                    <input type={`password`} />
+                    <label htmlFor="password">{`Password`}</label>
+                    <input name="password" type={`password`} />
                 </div>
                 <div className={Classes({ "long-body": prop === "long-body" })} />
             </Dialog>
-        )
+        );
     }
 
     public render() {
@@ -102,27 +102,24 @@ export default class TestHarness extends React.Component<any, IState> {
             "loading",
             "loading-component",
             "loading-function",
-            "loading-dont-hide-buttons"
-        ]
-        const buttons = dialogs.map(type =>
-            <button
-                key={type}
-                type={`button`}
-                onClick={e => this.openDialog(type)}>
+            "loading-dont-hide-buttons",
+        ];
+        const buttons = dialogs.map((type) => (
+            <button key={type} type={`button`} onClick={() => this.openDialog(type)}>
                 {`Open ${type} dialog`}
             </button>
-        );
+        ));
 
         return (
             <div>
                 {buttons}
-                {dialogs.map(type => this.buildDialog(type))}
+                {dialogs.map((type) => this.buildDialog(type))}
             </div>
         );
     }
 }
 
-((() => {
+(() => {
     const root = createRoot(document.getElementById("contenthost")!);
     root.render(<TestHarness />);
-})());
+})();

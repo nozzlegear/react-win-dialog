@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 import Classes from "classnames";
 
 export type Props = React.PropsWithChildren<{
@@ -50,7 +50,7 @@ export type Props = React.PropsWithChildren<{
      */
     overlayStyle?: React.CSSProperties;
     /**
-     * Whether the dialog should prevent scrolling of the body elements under/behind the dialog when the dialog is open. 
+     * Whether the dialog should prevent scrolling of the body elements under/behind the dialog when the dialog is open.
      * @default true
      */
     overlayPreventsScrolling?: boolean;
@@ -70,7 +70,7 @@ export type Props = React.PropsWithChildren<{
      * Classname applied to the dialog container.
      */
     className?: string;
-}>
+}>;
 
 export function Dialog(props: Props): React.JSX.Element {
     const ignore = () => {};
@@ -95,13 +95,13 @@ export function Dialog(props: Props): React.JSX.Element {
             if (overlayPreventsScrolling) {
                 document.body.style.overflow = defaultOverflow || "";
             }
-        }
+        };
     }, [props.open]);
 
     if (props.open) {
         const buttons: React.JSX.Element[] = [];
         // Default animate to true if the prop wasn't passed in.
-        const animate = false
+        const animate = false;
         const loading = props.loading ?? false;
         const loadingHidesButtons = props.loadingHidesButtons ?? true;
 
@@ -114,22 +114,17 @@ export function Dialog(props: Props): React.JSX.Element {
 
             if (props.loadingComponent === null || props.loadingComponent === undefined) {
                 indicator = <progress className="react-win-dialog-loading-bar" />;
-            }
-            else if (typeof props.loadingComponent === "function") {
+            } else if (typeof props.loadingComponent === "function") {
                 indicator = React.createElement(props.loadingComponent);
             } else {
                 indicator = props.loadingComponent;
             }
 
-            return (
-                <div className="react-win-dialog-loading-container">
-                    {indicator}
-                </div>
-            )
-        }
+            return <div className="react-win-dialog-loading-container">{indicator}</div>;
+        };
 
         if (loading === false || loadingHidesButtons === false) {
-            if (typeof (props.secondaryText) === "string") {
+            if (typeof props.secondaryText === "string") {
                 buttons.push(
                     <button
                         key={`secondary-button`}
@@ -138,11 +133,11 @@ export function Dialog(props: Props): React.JSX.Element {
                         onClick={props.onSecondaryClick || ignore}
                     >
                         {props.secondaryText}
-                    </button>
-                )
+                    </button>,
+                );
             }
 
-            if (typeof (props.primaryText) === "string") {
+            if (typeof props.primaryText === "string") {
                 buttons.push(
                     <button
                         key={`primary-button`}
@@ -151,8 +146,8 @@ export function Dialog(props: Props): React.JSX.Element {
                         onClick={props.onPrimaryClick || ignore}
                     >
                         {props.primaryText}
-                    </button>
-                )
+                    </button>,
+                );
             }
         }
 
@@ -161,40 +156,30 @@ export function Dialog(props: Props): React.JSX.Element {
                 id={props.id}
                 key={`react-win-dialog-container`}
                 className={Classes(`react-win-dialog-container`, props.className)}
-                style={props.containerStyle}>
+                style={props.containerStyle}
+            >
                 <div
                     className={Classes("react-win-dialog", { danger: props.danger || false })}
-                    style={props.dialogStyle}>
+                    style={props.dialogStyle}
+                >
                     <p className="react-win-dialog-title">{props.title}</p>
                     <div className="react-win-dialog-content">
                         {props.children}
                         <LoadingIndicator />
                     </div>
-                    <div className="react-win-dialog-footer">
-                        {buttons}
-                    </div>
+                    <div className="react-win-dialog-footer">{buttons}</div>
                 </div>
             </div>
-        )
+        );
 
-        modal = (
-            <div>
-                {body}
-            </div>
-        )
+        modal = <div>{body}</div>;
     }
 
     const modalContainer = (
-        <div 
-            className={Classes(`react-win-dialog-overlay`, { open: props.open })} 
-            style={props.overlayStyle}
-        >
+        <div className={Classes(`react-win-dialog-overlay`, { open: props.open })} style={props.overlayStyle}>
             {modal}
         </div>
-    )
-
-    return ReactDOM.createPortal(
-        modalContainer,
-        document.body
     );
+
+    return ReactDOM.createPortal(modalContainer, document.body);
 }

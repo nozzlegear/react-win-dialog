@@ -86,7 +86,8 @@
             font-family: inherit;
         }
 
-        p, .control-group {
+        p,
+        .control-group {
             margin: 0 0 15px 0;
         }
 
