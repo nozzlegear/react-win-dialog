@@ -18,8 +18,7 @@
     "css"
   ],
   "scripts": {
-    "build": "yarn run validate && yarn run build:ts && yarn run build:css",
-    "build:css": "stylus -c --include-css -o ./dist ./css/all.styl",
+    "build": "yarn run validate && yarn run build:ts",
     "build:ts": "esbuild --outdir=dist --sourcemap index.tsx && tsc --emitDeclarationOnly",
     "test": "yarn build && yarn esbuild --bundle --serve=localhost:5000 --servedir=. tests/test.tsx",
     "validate": "tsc -p . --skipLibCheck --noEmit",
@@ -43,15 +42,16 @@
   },
   "homepage": "https://github.com/nozzlegear/react-win-dialog#readme",
   "dependencies": {
-    "classnames": "^2.3.1",
-    "react": "^17.0.2"
+    "classnames": "^2.3.1"
   },
   "devDependencies": {
-    "@types/react": "^17.0.39",
-    "@types/react-dom": "^17.0.11",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
     "esbuild": "^0.14.23",
-    "react-dom": "^17.0.2",
-    "stylus": "^0.56.0",
-    "typescript": "^4.5.5"
+    "react-dom": "^19.2.0",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "react": "^19.2.0"
   }
 }

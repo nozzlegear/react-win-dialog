@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Classes from "classnames";
 import { Dialog } from '../index';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import "../dist/all.css";
 
@@ -60,10 +60,10 @@ export default class TestHarness extends React.Component<any, IState> {
             "loading-function",
             "loading-dont-hide-buttons"
         ].some(p => p === prop);
-        const loadingComponent: React.ReactNode = prop === "loading-component"
+        const loadingComponent: React.JSX.ElementType | null = prop === "loading-component"
             ? "hello, this is a custom loading component wow" : prop === "loading-function"
             ? () => (<div>{"Custom loading component function"}</div>)
-            : null; 
+            : null;
         const loadingHidesButtons = prop === "loading-dont-hide-buttons" ? false : undefined;
 
         return (
@@ -124,6 +124,7 @@ export default class TestHarness extends React.Component<any, IState> {
     }
 }
 
-(function () {
-    render(<TestHarness />, document.getElementById("contenthost"));
-}());
+((() => {
+    const root = createRoot(document.getElementById("contenthost")!);
+    root.render(<TestHarness />);
+})());

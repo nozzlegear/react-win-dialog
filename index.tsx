@@ -23,10 +23,10 @@ export type Props = React.PropsWithChildren<{
      * A custom component to use as the loading indicator when {@link Props.loading} is true.
      * @default `<progress />`
      */
-    loadingComponent?: React.ReactNode | (() => React.ReactNode);
+    loadingComponent?: React.ReactNode | React.ComponentType;
     /**
      * Whether the dialog should hide its primary and secondary buttons when {@link Props.loading} is true.
-     * 
+     *
      */
     loadingHidesButtons?: boolean;
     /**
@@ -72,10 +72,10 @@ export type Props = React.PropsWithChildren<{
     className?: string;
 }>
 
-export function Dialog(props: Props): JSX.Element {
+export function Dialog(props: Props): React.JSX.Element {
     const ignore = () => {};
     const overlayPreventsScrolling = props.overlayPreventsScrolling !== false;
-    let modal: JSX.Element = <React.Fragment />;
+    let modal: React.JSX.Element = <React.Fragment />;
 
     // Save the body's default overflow so it can be reapplied when the modal is closed
     const defaultOverflow = React.useMemo(() => {
@@ -99,7 +99,7 @@ export function Dialog(props: Props): JSX.Element {
     }, [props.open]);
 
     if (props.open) {
-        const buttons: JSX.Element[] = [];
+        const buttons: React.JSX.Element[] = [];
         // Default animate to true if the prop wasn't passed in.
         const animate = false
         const loading = props.loading ?? false;
@@ -116,7 +116,7 @@ export function Dialog(props: Props): JSX.Element {
                 indicator = <progress className="react-win-dialog-loading-bar" />;
             }
             else if (typeof props.loadingComponent === "function") {
-                indicator = props.loadingComponent();
+                indicator = React.createElement(props.loadingComponent);
             } else {
                 indicator = props.loadingComponent;
             }
