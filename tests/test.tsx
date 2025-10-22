@@ -3,8 +3,6 @@ import Classes from "classnames";
 import { Dialog } from '../index';
 import { createRoot } from 'react-dom/client';
 
-import "../dist/all.css";
-
 export interface IState extends DialogState { }
 
 export interface DialogState {

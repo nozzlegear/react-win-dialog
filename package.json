@@ -2,7 +2,9 @@
   "name": "@nozzlegear/react-win-dialog",
   "version": "1.8.0",
   "description": "An attempt to recreate the Dialog element from WinJS.",
+  "type": "module",
   "main": "dist/index.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "packageManager": "npm@11.6.0",
   "exports": {
@@ -18,9 +20,8 @@
     "css"
   ],
   "scripts": {
-    "build": "yarn run validate && yarn run build:ts",
-    "build:ts": "esbuild --outdir=dist --sourcemap index.tsx && tsc --emitDeclarationOnly",
-    "test": "yarn build && yarn esbuild --bundle --serve=localhost:5000 --servedir=. tests/test.tsx",
+    "build": "npm run validate && vite build",
+    "dev": "vite dev .",
     "validate": "tsc -p . --skipLibCheck --noEmit",
     "prepublishOnly": "npm run build"
   },
@@ -47,9 +48,11 @@
   "devDependencies": {
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
-    "esbuild": "^0.14.23",
+    "@vitejs/plugin-react": "^5.0.4",
     "react-dom": "^19.2.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vite": "^7.1.11",
+    "vite-plugin-dts": "^4.5.4"
   },
   "peerDependencies": {
     "react": "^19.2.0"
