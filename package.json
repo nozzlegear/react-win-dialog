@@ -23,7 +23,9 @@
     "build": "npm run validate && vite build",
     "dev": "vite dev .",
     "validate": "tsc -p . --skipLibCheck --noEmit",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "format": "biome format --write index.tsx tests/* css/*",
+    "lint": "biome lint --write index.tsx tests/* css/* && npm run validate"
   },
   "repository": {
     "type": "git",
@@ -46,6 +48,7 @@
     "classnames": "^2.5.1"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.2.7",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "^5.0.4",
