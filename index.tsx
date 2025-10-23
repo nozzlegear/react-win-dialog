@@ -72,6 +72,8 @@ export type Props = React.PropsWithChildren<{
     className?: string;
 }>;
 
+type LoadingIndicatoryProps = Pick<Props, "loading" | "loadingComponent">;
+
 export function Dialog(props: Props): React.JSX.Element {
     const ignore = () => {};
     const overlayPreventsScrolling = props.overlayPreventsScrolling !== false;
@@ -96,32 +98,14 @@ export function Dialog(props: Props): React.JSX.Element {
                 document.body.style.overflow = defaultOverflow || "";
             }
         };
-    }, [props.open]);
+    }, [props.open, overlayPreventsScrolling, defaultOverflow]);
 
     if (props.open) {
         const buttons: React.JSX.Element[] = [];
         // Default animate to true if the prop wasn't passed in.
-        const animate = false;
+        const _animate = false;
         const loading = props.loading ?? false;
         const loadingHidesButtons = props.loadingHidesButtons ?? true;
-
-        const LoadingIndicator = () => {
-            if (props.loading !== true) {
-                return <React.Fragment />;
-            }
-
-            let indicator: React.ReactNode;
-
-            if (props.loadingComponent === null || props.loadingComponent === undefined) {
-                indicator = <progress className="react-win-dialog-loading-bar" />;
-            } else if (typeof props.loadingComponent === "function") {
-                indicator = React.createElement(props.loadingComponent);
-            } else {
-                indicator = props.loadingComponent;
-            }
-
-            return <div className="react-win-dialog-loading-container">{indicator}</div>;
-        };
 
         if (loading === false || loadingHidesButtons === false) {
             if (typeof props.secondaryText === "string") {
@@ -165,7 +149,7 @@ export function Dialog(props: Props): React.JSX.Element {
                     <p className="react-win-dialog-title">{props.title}</p>
                     <div className="react-win-dialog-content">
                         {props.children}
-                        <LoadingIndicator />
+                        <LoadingIndicator loading={loading} loadingComponent={props.loadingComponent} />
                     </div>
                     <div className="react-win-dialog-footer">{buttons}</div>
                 </div>
@@ -183,3 +167,20 @@ export function Dialog(props: Props): React.JSX.Element {
 
     return ReactDOM.createPortal(modalContainer, document.body);
 }
+
+const LoadingIndicator = React.memo((props: LoadingIndicatoryProps) => {
+    if (props.loading !== true)
+        return <React.Fragment />;
+
+    let indicator: React.ReactNode;
+
+    if (props.loadingComponent === null || props.loadingComponent === undefined) {
+        indicator = <progress className="react-win-dialog-loading-bar" />;
+    } else if (typeof props.loadingComponent === "function") {
+        indicator = React.createElement(props.loadingComponent);
+    } else {
+        indicator = props.loadingComponent;
+    }
+
+    return <div className="react-win-dialog-loading-container">{indicator}</div>;
+});

@@ -20,7 +20,7 @@ export interface DialogState {
 
 type DialogProp = keyof DialogState;
 
-export default class TestHarness extends React.Component<any, IState> {
+export default class TestHarness extends React.Component<unknown, IState> {
     constructor(props, context) {
         super(props, context);
 
